@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./ecommerce-backend  # Path to the backend project
+      dockerfile: Dockerfile        # Optional, default is Dockerfile if not specified
+    container_name: ecommerce-backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - mysql-db
+    networks:
+      - ecommerce-network
+
+  frontend:
+    build:
+      context: ./ecommerce-frontend  # Path to the frontend project
+      dockerfile: Dockerfile         # Optional, default is Dockerfile if not specified
+    container_name: ecommerce-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - ecommerce-network
+
+  mysql-db:
+    image: mysql:8.0
+    container_name: mysql-db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecommerce_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - ecommerce-network
+
+networks:
+  ecommerce-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
