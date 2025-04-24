@@ -1,4 +1,4 @@
-# E-Commerce-Docker
+# 📦 E-Commerce-Docker
 
 A fully containerized e-commerce platform leveraging Docker and Docker Compose for simplified development and deployment.
 
